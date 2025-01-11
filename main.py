@@ -1,17 +1,5 @@
-def a():
-    print("a")
-
-def b():
-    print("b")
+print(hash("a"))
 
 
-def c():
-    print()
-
-def d():
-    a()
-    b()
-    c()
-
-
-d()
+nums = {1, 2, 3}
+nums.add(3)
