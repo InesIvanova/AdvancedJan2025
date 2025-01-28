@@ -1,6 +1,7 @@
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
+import os
 
-print(fibonacci(6))
+file_path = os.path.join("example.txt")
+
+file = open(file_path, "w")
+file.write("asd")
+
