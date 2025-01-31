@@ -1,0 +1,8 @@
+Create-file.txt
+Add-file.txt-First Line
+Add-file.txt-Second Line
+Replace-random.txt-Some-some
+Replace-file.txt-First-1st
+Replace-file.txt-Second-2nd
+Delete-random.txt
+End
