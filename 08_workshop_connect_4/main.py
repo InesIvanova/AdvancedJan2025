@@ -53,27 +53,39 @@ def check_direction_count(current_row_index, current_col_index, row_index_moveme
     count = 0
 
     for index in range(1, CONNECT_WINNER_COUNT):
-        # TODO multiple better than + or -
         next_row_index = current_row_index + row_index_movement * index
         next_col_index = current_col_index + col_index_movement * index
         if not is_valid_position(next_row_index, next_col_index):
             return count
         if board[next_row_index][next_col_index] == current_player_num:
             count += 1
+        else:
+            return count
     return count
 
+def check_opposite_direction_count(current_row_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num):
+    count = 0
+    for index in range(1, CONNECT_WINNER_COUNT):
+        next_row_index = current_row_index - row_index_movement * index
+        next_col_index = current_col_index - col_index_movement * index
+        if not is_valid_position(next_row_index, next_col_index):
+            return count
+        if board[next_row_index][next_col_index] == current_player_num:
+            count += 1
+    return count
 
 def is_winner(current_wor_index, current_col_index, board, current_player_num):
+
     for direction, movement in direction_mapper.items():
+        total_count = 1
+
         row_index_movement, col_index_movement = movement
 
-        count_direction = check_direction_count(current_wor_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num)
-        # TODO
-        # opposite_count_direction = check_opposite_direction_count()
-
-        # TODO
-        # if count_direction + opposite_count_direction ==??
-
+        total_count += check_direction_count(current_wor_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num)
+        total_count += check_opposite_direction_count(current_wor_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num)
+        if total_count >= CONNECT_WINNER_COUNT:
+            return True
+    return False
 
 
 def print_board(board):
@@ -92,11 +104,13 @@ while True:
     player_num = 1 if turns % 2 != 0 else 2
     row_index, column_index = obtain_position(player_num, matrix)
     matrix[row_index][column_index] = player_num
-    if turns >= 7 and is_winner(row_index, column_index, matrix, player_num):
-        break
+    print_board(matrix)
+    if turns >= 7:
+        if is_winner(row_index, column_index, matrix, player_num):
+            print(f"Player {player_num} you won!")
+            break
     if ROWS*COLUMNS + 1 == turns:
         print("Board is full. No winner")
         break
     turns += 1
-    print_board(matrix)
 
