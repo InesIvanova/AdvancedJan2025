@@ -1,0 +1,55 @@
+# By row
+1
+1
+2
+2
+3
+3
+4
+4
+
+By row (in the middle)
+1
+1
+2
+2
+4
+4
+3
+
+By column:
+1
+2
+1
+2
+1
+2
+1
+
+Diagonal
+1
+2
+2
+3
+3
+2
+3
+4
+4
+4
+4
+
+
+
+By diagonal in the middle
+1
+2
+2
+3
+3
+4
+4
+4
+4
+4
+3

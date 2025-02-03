@@ -3,11 +3,12 @@ COLUMNS = 7
 CONNECT_WINNER_COUNT = 4
 
 direction_mapper = {
-    "up": (-1, 0),
+    "down": (1, 0),
     "right": (0, 1),
     "up_right": (-1, 1),
     "up_left": (-1, -1),
 }
+
 
 class InvalidColumnNumber(Exception):
     pass
@@ -37,7 +38,7 @@ def obtain_position(player_num, board):
             continue
         available_row_index = None
         column_index = column - 1
-        for row_index in range(ROWS-1, -1, -1):
+        for row_index in range(ROWS - 1, -1, -1):
             if board[row_index][column_index] == 0:
                 available_row_index = row_index
                 return available_row_index, column_index
@@ -45,16 +46,26 @@ def obtain_position(player_num, board):
             print(f"Please select a colunm with available spots")
             continue
 
+
 def is_valid_position(row, col):
-    return 0<=row< ROWS and 0<=col<COLUMNS
+    return 0 <= row < ROWS and 0 <= col < COLUMNS
 
 
-def check_direction_count(current_row_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num):
+def check_direction_count(
+    current_row_index,
+    current_col_index,
+    row_index_movement,
+    col_index_movement,
+    board,
+    current_player_num,
+    sign,
+):
     count = 0
 
     for index in range(1, CONNECT_WINNER_COUNT):
-        next_row_index = current_row_index + row_index_movement * index
-        next_col_index = current_col_index + col_index_movement * index
+        next_row_index = eval(f"{current_row_index} {sign} {row_index_movement}*{index}")
+        next_col_index = eval(f"{current_col_index} {sign} {col_index_movement} * {index}")
+
         if not is_valid_position(next_row_index, next_col_index):
             return count
         if board[next_row_index][next_col_index] == current_player_num:
@@ -63,16 +74,6 @@ def check_direction_count(current_row_index, current_col_index, row_index_moveme
             return count
     return count
 
-def check_opposite_direction_count(current_row_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num):
-    count = 0
-    for index in range(1, CONNECT_WINNER_COUNT):
-        next_row_index = current_row_index - row_index_movement * index
-        next_col_index = current_col_index - col_index_movement * index
-        if not is_valid_position(next_row_index, next_col_index):
-            return count
-        if board[next_row_index][next_col_index] == current_player_num:
-            count += 1
-    return count
 
 def is_winner(current_wor_index, current_col_index, board, current_player_num):
 
@@ -81,8 +82,25 @@ def is_winner(current_wor_index, current_col_index, board, current_player_num):
 
         row_index_movement, col_index_movement = movement
 
-        total_count += check_direction_count(current_wor_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num)
-        total_count += check_opposite_direction_count(current_wor_index, current_col_index, row_index_movement, col_index_movement, board, current_player_num)
+        total_count += check_direction_count(
+            current_wor_index,
+            current_col_index,
+            row_index_movement,
+            col_index_movement,
+            board,
+            current_player_num,
+            "+"
+        )
+        if direction != "down":
+            total_count += check_direction_count(
+                current_wor_index,
+                current_col_index,
+                row_index_movement,
+                col_index_movement,
+                board,
+                current_player_num,
+                "-"
+            )
         if total_count >= CONNECT_WINNER_COUNT:
             return True
     return False
@@ -109,8 +127,7 @@ while True:
         if is_winner(row_index, column_index, matrix, player_num):
             print(f"Player {player_num} you won!")
             break
-    if ROWS*COLUMNS + 1 == turns:
+    if ROWS * COLUMNS + 1 == turns:
         print("Board is full. No winner")
         break
     turns += 1
-
