@@ -9,6 +9,8 @@ direction_mapper = {
     "up_left": (-1, -1),
 }
 
+available_spots = {column_index: ROWS-1 for column_index in range(COLUMNS)}
+
 
 class InvalidColumnNumber(Exception):
     pass
@@ -18,33 +20,35 @@ class FullColumnError(Exception):
     pass
 
 
-def validate_column_choice(player_num, column_choice, board):
+def validate_column_choice(player_num, column_choice, available_spots):
     try:
         column = int(column_choice)
         if column < 1 or column > 7:
             raise InvalidColumnNumber
+        available_row = available_spots[column-1]
+        if available_row < 0:
+            raise FullColumnError
         return column
     except ValueError:
         print(f"Player {player_num}, please enter a valid number")
     except InvalidColumnNumber:
         print(f"Player {player_num}, please enter a number between 1-7")
+    except FullColumnError:
+        print(f"Please select a columн with available spots")
 
 
-def obtain_position(player_num, board):
+def obtain_position(player_num, available_spots):
     while True:
         data = input(f"Player {player_num}, please select a column: ")
-        column = validate_column_choice(player_num, data, board)
+        column = validate_column_choice(player_num, data, available_spots)
         if not column:
             continue
-        available_row_index = None
         column_index = column - 1
-        for row_index in range(ROWS - 1, -1, -1):
-            if board[row_index][column_index] == 0:
-                available_row_index = row_index
-                return available_row_index, column_index
-        if not available_row_index:
-            print(f"Please select a colunm with available spots")
-            continue
+        return available_spots[column_index], column_index
+        # TODO optimise
+        # for row_index in range(ROWS - 1, -1, -1):
+        #     if board[row_index][column_index] == 0:
+        #         return row_index, column_index
 
 
 def is_valid_position(row, col):
@@ -120,8 +124,9 @@ for _ in range(ROWS):
 print_board(matrix)
 while True:
     player_num = 1 if turns % 2 != 0 else 2
-    row_index, column_index = obtain_position(player_num, matrix)
+    row_index, column_index = obtain_position(player_num, available_spots)
     matrix[row_index][column_index] = player_num
+    available_spots[column_index] -= 1
     print_board(matrix)
     if turns >= 7:
         if is_winner(row_index, column_index, matrix, player_num):
