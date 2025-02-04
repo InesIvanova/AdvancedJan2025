@@ -1,3 +1,6 @@
-import os
+from random import shuffle, choice
+fruits = ["apple", "banana", "cherry"]
 
-os.makedirs("new_file.txt")
+print(choice(fruits))
+print(shuffle(fruits))
+print(fruits)
