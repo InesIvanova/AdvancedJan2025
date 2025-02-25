@@ -18,7 +18,6 @@ class Stack:
         elements = reversed(self.data)
         return "[" + ", ".join([str(el) for el in elements]) + "]"
 
-
 s = Stack()
 print(s.is_empy())
 print(s)
