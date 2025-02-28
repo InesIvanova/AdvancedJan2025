@@ -1,30 +1,33 @@
-class Stack:
-    def __init__(self):
-        self.data = []
+class Person:
+    def __init__(self,):
+        pass
 
-    def push(self, el):
-        self.data.append(el)
+    # def get_id(self):
+    #     return self.__id
 
-    def pop(self):
-        return self.data.pop()
 
-    def top(self):
-        return self.data[-1]
-
-    def is_empty(self):
-        return False if self.data else True
+class Teacher(Person):
+    def __init__(self, name, age, id, salary):
+        super().__init__(name, age, id)
+        self.salary = salary
 
     def __str__(self):
-        elements = reversed(self.data)
-        return "[" + ", ".join([str(el) for el in elements]) + "]"
+        return self._id
 
 
-s = Stack()
-print(s.is_empy())
-print(s)
-s.push(6)
-s.push(7)
-print(s.is_empy())
-print(s)
-print(s.pop())
-print(s)
+# p = Person("Test", 30, "000000")
+# p.name = "asd"
+# # print(p.name)
+# # print(p.__id)
+#
+
+
+
+def define_name():
+    return  "asd"
+
+p = Person()
+p2 = Person
+
+if p is p2:
+    print("a")
