@@ -1,22 +1,30 @@
 class Person:
-    def __init__(self, id):
-        self.id = id
-        self.age = None
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
 
-    @property
-    def age(self):
-        return self.__age
+    def __lt__(self, other):
+        return self.age < other.age
 
-    @age.setter
-    def age(self, value):
-        if self.id.startswith("94"):
-            self.__age = 30
+    def __len__(self):
+        return len(self.name)
 
-    @staticmethod
-    def is_adult(age):
-        return age >= 18
+    def __add__(self, other):
+        name = self.name + " " + other.name
+        age = self.age + other.age
+        return Person(name, age)
 
 
-p = Person("9408191212")
-print(p.age)
-print(p.is_adult(19))
+    # def concat_people(self, other):
+    #     name = self.name + " " + other.name
+    #     age = self.age + other.age
+    #     return Person(name, age)
+
+
+p1 = Person("Test", "40")
+p2 = Person("Tes2", 41)
+
+p3 = p1 + p2
+
+print(p3.name)
+print(p3.age)
