@@ -1,13 +1,27 @@
-class Person:
-    def __init__(self):
-        self.first_name = 'Peter'
-        self.last_name = 'Parker'
+class A:
+    # def __init__(self, name, age):
+    #     self.name = name
+    #     self.age = age
 
-    def __full_name(self):
-        return f'{self.first_name} {self.last_name}'
-
-    def info(self):
-        return self.__full_name()
+    def a(self):
+        return "a"
 
 
-p = Person()
+
+class B(A):
+    # def __init__(self, name, age, salary):
+    #     super().__init__(name, age)
+    #     self.salary = salary
+
+    def a(self):
+        return "asd"
+
+    def b(self):
+        res = self.a()
+        return f"{res} a from B class"
+
+
+
+b = B()
+print(b.a())
+print(b.c())
