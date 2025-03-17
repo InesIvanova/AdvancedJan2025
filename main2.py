@@ -1,30 +1,35 @@
-class Person:
-    def __init__(self, name: str, age: int):
-        self.name = name
-        self.age = age
+# def first_n(n):
+#     num = 0
+#     while num < n:
+#         yield num
+#         num += 1
+#
+# elements = first_n(5)
+# for el in elements:
+#     print(el)
+# sum_first_n = sum(first_n(5))
+# print(sum_first_n)
 
-    def __lt__(self, other):
-        return self.age < other.age
+def my_gen():
+    n = 1
+    print('This is printed first')
+    yield n
 
-    def __len__(self):
-        return len(self.name)
+    n += 1
+    print('This is printed second')
+    yield 'asd'
 
-    def __add__(self, other):
-        name = self.name + " " + other.name
-        age = self.age + other.age
-        return Person(name, age)
-
-
-    # def concat_people(self, other):
-    #     name = self.name + " " + other.name
-    #     age = self.age + other.age
-    #     return Person(name, age)
+    n += 1
+    print('This is printed at last')
+    yield n
 
 
-p1 = Person("Test", "40")
-p2 = Person("Tes2", 41)
+# print([el for el in range(1, 6)])
+# print(my_gen())
+result = my_gen()
+for el in result:
+    print(el)
 
-p3 = p1 + p2
-
-print(p3.name)
-print(p3.age)
+# result = my_gen()
+for el in result:
+    print(el)

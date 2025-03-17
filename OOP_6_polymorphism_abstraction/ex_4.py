@@ -38,10 +38,14 @@ class Rectangle(Shape):
         self.__height = height
         self.__width = width
 
+    def __sizeof__(self):
+        return 16
+
 
 shapes = [Rectangle(2, 3), Circle(5), Rectangle(10, 5)]
 
 for s in shapes:
+    print(s.__sizeof__())
     print(s.calculate_perimeter())
     print(s.calculate_area())
     print(s.some_other_method())
