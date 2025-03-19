@@ -1,35 +1,61 @@
-# def first_n(n):
-#     num = 0
-#     while num < n:
-#         yield num
-#         num += 1
+# class func_logger:
 #
-# elements = first_n(5)
-# for el in elements:
-#     print(el)
-# sum_first_n = sum(first_n(5))
-# print(sum_first_n)
-
-def my_gen():
-    n = 1
-    print('This is printed first')
-    yield n
-
-    n += 1
-    print('This is printed second')
-    yield 'asd'
-
-    n += 1
-    print('This is printed at last')
-    yield n
+#     _logfile = 'out.log'
+#
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, *args, **kwargs):
+#         log_string = self.func.__name__ + " was called"
+#         with open(self._logfile, 'a') as opened_file:
+#             opened_file.write(log_string + '\n')
+#         return self.func(*args)
+from functools import wraps
 
 
-# print([el for el in range(1, 6)])
-# print(my_gen())
-result = my_gen()
-for el in result:
-    print(el)
+def func_logger(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        log_string = func.__name__ + " was called"
+        with open("out.log", 'a') as opened_file:
+             opened_file.write(log_string + '\n')
+        return func(*args, **kwargs)
+    return wrapper
 
-# result = my_gen()
-for el in result:
-    print(el)
+
+
+@func_logger
+def say_hi(name):
+    print(f"Hi, {name}")
+
+@func_logger
+def say_bye(name):
+    print(f"Bye, {name}")
+
+say_hi("Peter")
+say_bye("Peter")
+
+
+# class Fibonacci:
+#     def __init__(self):
+#         self.cache = {}
+#
+#     def __call__(self, n):
+#         if n not in self.cache:
+#             if n == 0:
+#                 self.cache[0] = 0
+#             elif n == 1:
+#                 self.cache[1] = 1
+#             else:
+#                 self.cache[n] = self(n-1) + self(n-2)
+#         return self.cache[n]
+#
+#
+# fib = Fibonacci()
+#
+# for i in range(5):
+#     print(fib(i))
+#
+# print(fib.cache)
+# print(fib(3))
+
