@@ -1,30 +1,27 @@
-from abc import abstractmethod, ABC, abstractproperty
+def singleton(cls):    
+    instance = [None]
+    def wrapper(*args, **kwargs):
+        if instance[0] is None:
+            instance[0] = cls(*args, **kwargs)
+        return instance[0]
+
+    return wrapper
 
 
-class Person(ABC):
-    def __init__(self, age):
-        self.age = age
 
-    @abstractmethod
-    def greet(self):
+@singleton
+class DBConnection(object):
+
+    def __init__(self):
+        """Initialize your database connection here."""
         pass
 
-    @property
-    @abstractmethod
-    def is_adult(self):
-        return self.age >= 18
+    def __str__(self):
+        return 'Database connection object'
 
 
-class Student(Person):
-    def greet(self):
-        return "Hi I a a student"
+db = DBConnection()
+print(id(db))
 
-    @property
-    def is_adult(self):
-        return 'yes'
-
-    def __call__(self, *args, **kwargs):
-        print("object was called")
-
-s = Student(20)
-print(s())
+db = DBConnection()
+print(id(db))

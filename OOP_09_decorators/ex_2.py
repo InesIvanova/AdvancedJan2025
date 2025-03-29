@@ -28,3 +28,4 @@ def third_special_letter():
 print(get_letters(['a', 'b', 'e', 'c']))
 print(get_special_letter("u", "r"))
 print(third_special_letter())
+print(third_special_letter.__name__)
