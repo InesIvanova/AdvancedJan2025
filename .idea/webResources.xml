@@ -6,6 +6,7 @@
         <entryData>
           <resourceRoots>
             <path value="file://$PROJECT_DIR$/OOP_5_static_and_class_methods/hotel_rooms/project" />
+            <path value="file://$PROJECT_DIR$" />
           </resourceRoots>
         </entryData>
       </entry>
